@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Form\ProductType;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/product")
@@ -18,11 +21,26 @@ class ProductController extends AbstractController
     /**
      * @Route("/", name="app_product_index", methods={"GET"})
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository,CategoryRepository $catRepo): Response
     {
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
+            'categories' => $catRepo->findAll()
         ]);
+    }
+
+    /**
+     * @Route("/indexByCategory/{cat}", name="app_product_indexByCategory", methods={"GET"})
+     */
+    public function indexByCategory(ProductRepository $productRepository,Category $cat,CategoryRepository $catRepo): Response
+    {
+        
+        // dd($cat);
+        return $this->render('product/index.html.twig', [
+            'products' => $productRepository->findBy(['category'=>$cat->getId()]),
+            'categories' => $catRepo->findAll()
+        ]);
+
     }
 
     /**

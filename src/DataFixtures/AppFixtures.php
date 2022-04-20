@@ -16,13 +16,13 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         // create 5 categories! Bam!
-        for ($cat = 0; $cat <3; $cat++) {
+        for ($cat = 0; $cat <5; $cat++) {
             $category = new Category();
             $category->setName($faker->word());
             $manager->persist($category);
         
         // create 20 products! Bam!
-        for ($i = 1; $i <3; $i++) {
+        for ($i = 1; $i <11; $i++) {
             $product = new Product();
             $product->setName($faker->word());
             $product->setImage('livre'.$i.'.jpg');

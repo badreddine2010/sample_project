@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SampleProjectController extends AbstractController
 {
     /**
-     * @Route("/sample/project", name="app_sample_project")
+     * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(ProductRepository $productRepository): Response
     {
         return $this->render('sample_project/index.html.twig', [
-            'controller_name' => 'SampleProjectController',
+            'products' => $productRepository->findAll(),
         ]);
     }
 }
